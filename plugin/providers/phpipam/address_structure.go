@@ -101,9 +101,15 @@ func resourceAddressSchema() map[string]*schema.Schema {
 	for k, v := range s {
 		switch {
 		// IP Address and Subnet ID are ForceNew
-		case k == "subnet_id" || k == "ip_address":
+		case k == "subnet_id":
 			v.Required = true
 			v.ForceNew = true
+		// If ip_address == "" or undefined =>
+		// reserve 1st free ip with POST
+		case k == "ip_address":
+		        v.Optional = true
+		        v.ForceNew = true
+		        v.Computed = true
 		case k == "custom_fields":
 			v.Optional = true
 		case resourceAddressOptionalFields.Has(k):

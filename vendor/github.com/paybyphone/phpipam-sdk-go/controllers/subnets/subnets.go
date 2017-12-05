@@ -134,6 +134,12 @@ func (c *Controller) GetFirstFreeAddress(id int) (out string, err error) {
 	return
 }
 
+func (c *Controller) ReserveFirstFreeAddress(id int) (out string, err error) {
+	err = c.SendRequest("POST", fmt.Sprintf("/addresses/first_free/%d/", id), &struct{}{}, &out)
+	return
+}
+
+
 // GetAddressesInSubnet GETs the IP addresses for a specific subnet, via a
 // supplied subnet ID.
 func (c *Controller) GetAddressesInSubnet(id int) (out []addresses.Address, err error) {
