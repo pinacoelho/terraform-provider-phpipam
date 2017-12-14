@@ -78,7 +78,7 @@ func (r *requestResponse) BodyString() string {
 func (r *requestResponse) ReadResponseJSON(v interface{}) error {
 	var resp APIResponse
         var success bool = false
-	log.Printf("[DEBUG] r.body %s", string(r.Body))
+
 	if err := json.Unmarshal(r.Body, &resp); err != nil {
 		return fmt.Errorf("JSON parsing error: %s - Response body: %s", err, r.Body)
 	}
