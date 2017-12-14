@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+        "reflect"
 
 	"github.com/paybyphone/phpipam-sdk-go/phpipam/session"
 )
@@ -25,7 +26,7 @@ type APIResponse struct {
 	Message string
 
 	// Whether or not the API request was successful.
-	Success bool
+	Success interface{}
 }
 
 // Request represents the API request.
@@ -76,11 +77,23 @@ func (r *requestResponse) BodyString() string {
 // request is successful and the response data is unmarshalled.
 func (r *requestResponse) ReadResponseJSON(v interface{}) error {
 	var resp APIResponse
+        var success bool = false
+	log.Printf("[DEBUG] r.body %s", string(r.Body))
 	if err := json.Unmarshal(r.Body, &resp); err != nil {
 		return fmt.Errorf("JSON parsing error: %s - Response body: %s", err, r.Body)
 	}
 
-	if !resp.Success {
+        if (reflect.TypeOf(resp.Success).Name() == "bool") {
+            success = resp.Success.(bool)
+        }
+
+        if (reflect.TypeOf(resp.Success).Name() == "int") {
+            if (resp.Success.(int) == 1) {
+                success = true
+            }
+        }
+
+	if !success {
 		return r.handleError()
 	}
 
