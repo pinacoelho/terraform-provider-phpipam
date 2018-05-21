@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/paybyphone/phpipam-sdk-go/controllers/subnets"
+	"github.com/pinacoelho/phpipam-sdk-go/controllers/subnets"
 )
 
 func dataSourcePHPIPAMSubnet() *schema.Resource {
@@ -46,11 +46,11 @@ func dataSourcePHPIPAMSubnetRead(d *schema.ResourceData, meta interface{}) error
 	flattenSubnet(out[0], d)
 	//fields, err := c.GetSubnetCustomFields(out[0].ID)
 	//if err != nil {
-		//return err
+	//return err
 	//}
 	//trimMap(fields)
 	//if err := d.Set("custom_fields", fields); err != nil {
-		//return err
+	//return err
 	//}
 	return nil
 }

@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/paybyphone/phpipam-sdk-go/controllers/addresses"
-	"github.com/paybyphone/phpipam-sdk-go/phpipam"
+	"github.com/pinacoelho/phpipam-sdk-go/controllers/addresses"
+	"github.com/pinacoelho/phpipam-sdk-go/phpipam"
 )
 
 // resourceAddressOptionalFields represents all the fields that are optional in
@@ -107,9 +107,9 @@ func resourceAddressSchema() map[string]*schema.Schema {
 		// If ip_address == "" or undefined =>
 		// reserve 1st free ip with POST
 		case k == "ip_address":
-		        v.Optional = true
-		        v.ForceNew = true
-		        v.Computed = true
+			v.Optional = true
+			v.ForceNew = true
+			v.Computed = true
 		case k == "custom_fields":
 			v.Optional = true
 		case resourceAddressOptionalFields.Has(k):
