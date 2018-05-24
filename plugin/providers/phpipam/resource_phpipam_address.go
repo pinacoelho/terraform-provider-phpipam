@@ -6,7 +6,8 @@ import (
 	"strconv"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/paybyphone/phpipam-sdk-go/phpipam"
+	"github.com/pinacoelho/phpipam-sdk-go/controllers/addresses"
+	"github.com/pinacoelho/phpipam-sdk-go/phpipam"
 )
 
 // resourcePHPIPAMAddress returns the resource structure for the phpipam_address
@@ -26,15 +27,32 @@ func resourcePHPIPAMAddress() *schema.Resource {
 
 func resourcePHPIPAMAddressCreate(d *schema.ResourceData, meta interface{}) error {
 	c := meta.(*ProviderPHPIPAMClient).addressesController
-	in := expandAddress(d)
+	sc := meta.(*ProviderPHPIPAMClient).subnetsController
+	var in addresses.Address
 
-	// Assert the ID field here is empty. If this is not empty the request will fail.
-	in.ID = 0
+	// Check if ip_address is specified or defined
+	if d.Get("ip_address").(string) == "" {
+		out, err := sc.ReserveFirstFreeAddress(d.Get("subnet_id").(int))
+		if err != nil {
+			return err
+		}
+		if out == "" {
+			return errors.New("Subnet has no free IP addresses")
+		}
 
-	if _, err := c.CreateAddress(in); err != nil {
-		return err
+		d.Set("ip_address", out)
+
+		in = expandAddress(d)
+	} else {
+		in = expandAddress(d)
+
+		// Assert the ID field here is empty. If this is not empty the request will fail.
+		in.ID = 0
+
+		if _, err := c.CreateAddress(in); err != nil {
+			return err
+		}
 	}
-
 	// If we have custom fields, set them now. We need to get the IP address's ID
 	// beforehand.
 	if customFields, ok := d.GetOk("custom_fields"); ok {

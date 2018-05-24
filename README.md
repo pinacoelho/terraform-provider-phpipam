@@ -1,5 +1,8 @@
 # Terraform Provider Plugin for PHPIPAM
 
+WARNING: This is a work-in-progress to get a terraform provider for PHPIPAM 1.3.1 up and running.
+
+
 This repository holds a external plugin for a [Terraform][1] provider to manage
 resources within [PHPIPAM][2], an open source IP address management system.
 
@@ -78,7 +81,7 @@ resource "phpipam_address" {
 
 ### Plugin Options
 
-The options for the plugin are as follows: 
+The options for the plugin are as follows:
 
  * `app_id` - The API application ID, configured in the PHPIPAM API panel. This
    application ID should have read/write access if you are planning to use the
@@ -166,7 +169,7 @@ The data source takes the following parameters:
  * `custom_field_filter` - A map of custom fields to search for. The filter
    values are regular expressions that follow the RE2 syntax for which you can
    find documentation [here](https://github.com/google/re2/wiki/Syntax). All
-   fields need to match for the match to succeed. 
+   fields need to match for the match to succeed.
 
 ⚠️  **NOTE:** `description`, `hostname`, and `custom_field_filter` fields return
 the first match found without any warnings. If you are looking to return
@@ -260,7 +263,7 @@ One of the following fields is required alongside `subnet_id`:
  * `custom_field_filter` - A map of custom fields to search for. The filter
    values are regular expressions that follow the RE2 syntax for which you can
    find documentation [here](https://github.com/google/re2/wiki/Syntax). All
-   fields need to match for the match to succeed. 
+   fields need to match for the match to succeed.
 
 ⚠️  **NOTE:** An empty or unspecified `custom_field_filter` value is the
 equivalent to a regular expression that matches everything, and hence will
@@ -506,7 +509,7 @@ The data source takes the following parameters:
  * `custom_field_filter` - A map of custom fields to search for. The filter
    values are regular expressions that follow the RE2 syntax for which you can
    find documentation [here](https://github.com/google/re2/wiki/Syntax). All
-   fields need to match for the match to succeed. 
+   fields need to match for the match to succeed.
 
 ⚠️  **NOTE:** Searches with the `description`, `description_match` and
 `custom_field_filter` fields return the first match found without any warnings.
@@ -614,7 +617,7 @@ One of the following below parameters is required:
    for a subnet.
  * `custom_field_filter` - A map of custom fields to search for. The filter
    values are regular expressions. All fields need to match for the match to
-   succeed. 
+   succeed.
 
 You can find documentation for the regular expression syntax used with the
 `description_match` and `custom_field_filter` attributes
@@ -689,7 +692,7 @@ The following resources are supplied by this plugin:
 The `phpipam_address` resource manages an IP address in PHPIPAM. You can use it
 to create IP address reservations for IP addresses that have been created by
 other Terraform resources, or supplied by the `phpipam_first_free_address` data
-source. An example usage is below. 
+source. An example usage is below.
 
 ⚠️  **NOTE:** If you are using the `phpipam_first_free_address` to get the first
 free IP address in a specific subnet, make sure you set `subnet_id` and
