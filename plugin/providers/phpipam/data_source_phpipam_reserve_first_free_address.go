@@ -24,7 +24,7 @@ func dataSourcePHPIPAMReserveFirstFreeAddress() *schema.Resource {
 
 func dataSourcePHPIPAMReserveFirstFreeAddressRead(d *schema.ResourceData, meta interface{}) error {
 	c := meta.(*ProviderPHPIPAMClient).subnetsController
-	out, err := c.ReserveFirstFreeAddress(d.Get("subnet_id").(int))
+	out, err := c.ReserveFirstFreeAddressAnon(d.Get("subnet_id").(int))
 	if err != nil {
 		return err
 	}

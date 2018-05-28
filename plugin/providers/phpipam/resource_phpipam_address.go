@@ -32,7 +32,7 @@ func resourcePHPIPAMAddressCreate(d *schema.ResourceData, meta interface{}) erro
 
 	// Check if ip_address is specified or defined
 	if d.Get("ip_address").(string) == "" {
-		out, err := sc.ReserveFirstFreeAddress(d.Get("subnet_id").(int))
+		out, err := sc.ReserveFirstFreeAddress(d.Get("subnet_id").(int), d.Get("hostname").(string), d.Get("description").(string))
 		if err != nil {
 			return err
 		}
