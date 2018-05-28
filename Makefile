@@ -1,3 +1,11 @@
+
+
+
+
+install:
+	go install -v
+	ls -al ${GOPATH}/bin/terraform-provider-phpipam
+
 test:
 	go test -v $(shell go list ./... | grep -v /vendor/) 
 
