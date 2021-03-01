@@ -1,2 +1,24 @@
+# Exclude backup files
+*~
+*.bkp
+*.bak
+*.BAK
+*.old
+*.orig
+*.elc
+\#*\#
+.\#*
+
+# Exclude terraform files
 tf.log
+*.tfstate
+
+# Exclude Eclipse project files
 .project
+
+# Misc
+pkg
+
+# Stuff to be pulled by go vendor
+vendor/github.com
+vendor/golang.org
